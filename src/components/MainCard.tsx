@@ -1,24 +1,21 @@
 // import React from 'react'
-import { WiDayRain } from 'react-icons/wi';
-const MainCard = () => {
+import { WiDayRain } from "react-icons/wi";
+import { MainCardProps } from "../types";
+const MainCard = ({ data }: MainCardProps) => {
+  console.log(data);
   return (
-<div className="card">
-  <div className="card-header text-center">
-    Gandhinagar
-  </div>
-  <div className="card-body">
-    <h5 className="card-title text-center">Windy</h5>
-    <div className="card-text">
-        <p className="text">temp </p>
-        <p className="text-end">humidity</p>
-
+    <div className="card bg-dark text-white">
+      <img src={`./../icons/${data.icon}.png`} className="card-img" alt="" />
+      <div className="card-img-overlay">
+        <h5 className="card-title">Card title</h5>
+        <p className="card-text">
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </p>
+        <p className="card-text">Last updated 3 mins ago</p>
+      </div>
     </div>
-  </div>
-  <div className="card-footer text-muted">
-    2 days ago
-  </div>
-</div>
-  )
-}
+  );
+};
 
-export default MainCard
+export default MainCard;
