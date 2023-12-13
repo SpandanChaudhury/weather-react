@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+body {
+  /* max-width: 900px; */
+  margin: 0 auto;
+  /* background-color: #eae6e2; */
+  color: #444e54;
+  background-image: url('../public/icons/background.jpg');
+  /* background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; */
+}
