@@ -27,3 +27,7 @@ export type ToggleSwitchProps = {
     fetched: string;
     changeData: () => void;
 }
+export type FilterProps = {
+    value: number;
+    handleChange : (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}

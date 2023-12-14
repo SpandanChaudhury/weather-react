@@ -6,10 +6,11 @@ import { useState } from "react";
 import { RequiredData } from "../../types";
 import ToggleSwitch from "./ToggleSwitch";
 import ForecastCard from "./ForecastCard";
+import Filter from "./Filter";
 import { convertData } from "../../utils/tempConversion";
 const MainBody = () => {
   console.log("main body");
-  const [ fetched, setFetched ] = useState('celsius');
+  const [fetched, setFetched] = useState("celsius");
   // let today = new Date();
   // let date = today.getDate() + '-'+(today.getMonth()+1)+'-'+ today.getFullYear()
   // var time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
@@ -17,6 +18,7 @@ const MainBody = () => {
   const [query, setQuery] = useState("");
   const [data, setData] = useState<RequiredData>();
   const [forecast, setForecast] = useState<RequiredData[]>();
+  const [value, setValue] = useState(6);
 
   const findWeather = async () => {
     // console.log('findweather');
@@ -29,7 +31,7 @@ const MainBody = () => {
       .then((response) => {
         console.log(response.data);
         // setQuery(response.data.city_name);
-        setFetched('celsius');
+        setFetched("celsius");
         let selectedData = [];
         for (let i = 0; i < response.data.data.length; i++) {
           let cdata = {
@@ -42,7 +44,12 @@ const MainBody = () => {
             precipitation: response.data.data[i].pop,
             wind_speed: response.data.data[i].wind_spd,
           };
-          if (i == 0) setData({ ...cdata, location: query,  country: response.data.country_code });
+          if (i == 0)
+            setData({
+              ...cdata,
+              location: query,
+              country: response.data.country_code,
+            });
           else selectedData.push(cdata);
         }
 
@@ -52,22 +59,35 @@ const MainBody = () => {
   };
 
   const changeData = () => {
-    if(data && forecast)
-    {
+    if (data && forecast) {
       console.log(fetched);
       let updatedCurrData = convertData(data, fetched);
-      let updatedForecast = forecast.map((item : RequiredData) => convertData(item, fetched) );
+      let updatedForecast = forecast.map((item: RequiredData) =>
+        convertData(item, fetched)
+      );
       setFetched((prev) => {
-        return prev == 'celsius' ? 'fahrenheit': 'celsius';
+        return prev == "celsius" ? "fahrenheit" : "celsius";
       });
       console.log(fetched);
       setData(updatedCurrData);
       setForecast(updatedForecast);
     }
-  }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue(parseInt(event.target.value));
+    // console.log('changing value');
+  };
   return (
     <section className="container">
-      <Clock />
+      <div className="row">
+        <div className="col-10">
+          <Clock />
+        </div>
+        <div className="col-2">
+          <Filter value={value} handleChange={handleChange}></Filter>
+        </div>
+      </div>
       <div className="row">
         <div className="col-10">
           <SearchBox
@@ -79,14 +99,18 @@ const MainBody = () => {
 
         <div className="col-2">
           {/* <ToggleSwitch degree = {degree} setDegree={setDegree} /> */}
-          {data ?  <ToggleSwitch fetched = {fetched} changeData={changeData} /> : ""}
+          {data ? (
+            <ToggleSwitch fetched={fetched} changeData={changeData} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
 
       {data ? <MainCard data={data}></MainCard> : ""}
       <div className="d-flex flex-wrap justify-content-center">
         {forecast
-          ? forecast.map((item: RequiredData) => {
+          ? forecast.slice(0, value).map((item: RequiredData) => {
               return <ForecastCard {...item} />;
             })
           : ""}
