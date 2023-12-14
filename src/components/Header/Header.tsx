@@ -1,8 +1,5 @@
-const Header = ({currTime} : {currTime: string}) => {
-  let today = new Date();
-  let date = today.getDate() + '-'+(today.getMonth()+1)+'-'+ today.getFullYear()
-  // var time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
-  console.log(date);
+const Header = () => {
+
 
   return (
     <nav
@@ -24,14 +21,7 @@ const Header = ({currTime} : {currTime: string}) => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <div className="navbar-nav">
-
-            <h5 className = "nav-item text-info">
-            { date }, { currTime }
-            </h5>
-          </div>
-        </div>
+      
       </div>
     </nav>
   );

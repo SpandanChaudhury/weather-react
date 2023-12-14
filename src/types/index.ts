@@ -15,5 +15,14 @@ export type RequiredData = {
     wind_speed: number;
 }
 export type MainCardProps = {
-    data : RequiredData
+    data : RequiredData,
+}
+
+export type useWeatherReturn = {
+    currWeather: RequiredData | undefined | null,
+    forecast: RequiredData[] | undefined | null
+}
+export type ToggleSwitchProps = {
+    fetched: string;
+    changeData: () => void;
 }
