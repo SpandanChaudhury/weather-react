@@ -21,7 +21,7 @@ const ForecastCard = (data: RequiredData) => {
           </div>
           <div className="col-6">
             <div className="row">
-              <h4>{data.curr_temp}°</h4>
+              <h4 className="text-warning">{data.curr_temp}°</h4>
             </div>
             <div className="row">
               <h5 className="text-white">

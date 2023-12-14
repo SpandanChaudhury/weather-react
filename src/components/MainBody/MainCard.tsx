@@ -28,7 +28,7 @@ const MainCard = ({ data }: MainCardProps) => {
             <div className="col-4">
               <div className="row mb-5 pb-3">
                 <h2 className="" style={{ color: "#660033" }}>
-                  {data.location}
+                  {data.location}, {data.country}
                 </h2>
               </div>
               <div className="row">
@@ -53,13 +53,14 @@ const MainCard = ({ data }: MainCardProps) => {
             </div>
             <div className="col-4">
               <div className="row">
-                <h5 className="" style={{ color: "#660033" }}>
-                  {data.max_temp}° /{data.min_temp}°
-                </h5>
+              <h4 className="" style={{ color: "#cc6600" }}>
+                  {data.curr_temp}°
+                </h4>
               </div>
               <div className="row">
-                <h5 className="" style={{ color: "#cc6600" }}>
-                  {data.curr_temp}°
+                
+                <h5 className="" style={{ color: "#660033" }}>
+                  {data.max_temp}° /{data.min_temp}°
                 </h5>
               </div>
               <div className="row">

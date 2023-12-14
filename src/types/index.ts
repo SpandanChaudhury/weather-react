@@ -10,6 +10,7 @@ export type RequiredData = {
     min_temp: number;
     weather: string;
     location?: string;
+    country?: string;
     icon?: string;
     precipitation: number;
     wind_speed: number;

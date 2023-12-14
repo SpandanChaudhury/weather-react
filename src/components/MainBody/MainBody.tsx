@@ -42,7 +42,7 @@ const MainBody = () => {
             precipitation: response.data.data[i].pop,
             wind_speed: response.data.data[i].wind_spd,
           };
-          if (i == 0) setData({ ...cdata, location: query });
+          if (i == 0) setData({ ...cdata, location: query,  country: response.data.country_code });
           else selectedData.push(cdata);
         }
 

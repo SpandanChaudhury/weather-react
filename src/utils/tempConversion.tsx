@@ -3,15 +3,15 @@ import { RequiredData } from "../types";
 export const convertData = (data: RequiredData, degree: string) : RequiredData => {
     if(degree == 'celsius')
     {
-        data.curr_temp = parseFloat(celsiusToFahrenheit(data.curr_temp).toFixed(2));
-        data.max_temp = parseFloat(celsiusToFahrenheit(data.max_temp).toFixed(2));
-        data.min_temp = parseFloat(celsiusToFahrenheit(data.min_temp).toFixed(2));   
+        data.curr_temp = parseFloat(celsiusToFahrenheit(data.curr_temp).toFixed(1));
+        data.max_temp = parseFloat(celsiusToFahrenheit(data.max_temp).toFixed(1));
+        data.min_temp = parseFloat(celsiusToFahrenheit(data.min_temp).toFixed(1));   
     }
     else
     {
-        data.curr_temp = parseFloat(fahrenheitToCelsius(data.curr_temp).toFixed(2));
-        data.max_temp = parseFloat(fahrenheitToCelsius(data.max_temp).toFixed(2));
-        data.min_temp = parseFloat(fahrenheitToCelsius(data.min_temp).toFixed(2)); 
+        data.curr_temp = parseFloat(fahrenheitToCelsius(data.curr_temp).toFixed(1));
+        data.max_temp = parseFloat(fahrenheitToCelsius(data.max_temp).toFixed(1));
+        data.min_temp = parseFloat(fahrenheitToCelsius(data.min_temp).toFixed(1)); 
     }   
     return data;
 }
