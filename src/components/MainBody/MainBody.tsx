@@ -20,6 +20,7 @@ const MainBody = () => {
   const [forecast, setForecast] = useState<RequiredData[]>();
   const [value, setValue] = useState(6);
 
+  // fetching data
   const findWeather = async () => {
     // console.log('findweather');
     const apiKey = process.env.REACT_APP_apiKey;
@@ -58,7 +59,9 @@ const MainBody = () => {
       .catch((err) => console.log(err));
   };
 
+  // changing the degree
   const changeData = () => {
+    // console.log('changing data');
     if (data && forecast) {
       console.log(fetched);
       let updatedCurrData = convertData(data, fetched);
@@ -66,7 +69,7 @@ const MainBody = () => {
         convertData(item, fetched)
       );
       setFetched((prev) => {
-        return prev == "celsius" ? "fahrenheit" : "celsius";
+        return prev === "celsius" ? "fahrenheit" : "celsius";
       });
       console.log(fetched);
       setData(updatedCurrData);
@@ -98,7 +101,6 @@ const MainBody = () => {
         </div>
 
         <div className="col-2">
-          {/* <ToggleSwitch degree = {degree} setDegree={setDegree} /> */}
           {data ? (
             <ToggleSwitch fetched={fetched} changeData={changeData} />
           ) : (
