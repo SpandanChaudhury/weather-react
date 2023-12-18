@@ -24,8 +24,8 @@ export type useWeatherReturn = {
     forecast: RequiredData[] | undefined | null
 }
 export type ToggleSwitchProps = {
-    fetched: string;
-    changeData: () => void;
+    fetched?: string;
+    changeData?: () => void;
 }
 export type FilterProps = {
     value: number;

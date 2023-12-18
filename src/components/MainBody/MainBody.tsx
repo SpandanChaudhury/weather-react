@@ -1,13 +1,15 @@
 import axios from "axios";
+import { useState, createContext } from "react";
+import { RequiredData, ToggleSwitchProps } from "../../types";
+import { convertData } from "../../utils/tempConversion";
 import SearchBox from "./SearchBox";
 import MainCard from "./MainCard";
 import Clock from "./Clock";
-import { useState } from "react";
-import { RequiredData } from "../../types";
-import ToggleSwitch from "./ToggleSwitch";
+import ToggleData from "./ToggleData/ToggleData";
 import ForecastCard from "./ForecastCard";
 import Filter from "./Filter";
-import { convertData } from "../../utils/tempConversion";
+
+export const temperatureContext = createContext<ToggleSwitchProps>({});
 const MainBody = () => {
   console.log("main body");
   const [fetched, setFetched] = useState("celsius");
@@ -101,11 +103,14 @@ const MainBody = () => {
         </div>
 
         <div className="col-2">
-          {data ? (
+          {/* {data ? (
             <ToggleSwitch fetched={fetched} changeData={changeData} />
           ) : (
             ""
-          )}
+          )} */}
+          <temperatureContext.Provider value={{ fetched, changeData }}>
+            <ToggleData></ToggleData>
+          </temperatureContext.Provider>
         </div>
       </div>
 

@@ -1,6 +1,10 @@
-import { ToggleSwitchProps } from "../../types";
-import "./styles.css";
-const ToggleSwtich = ({ fetched, changeData }: ToggleSwitchProps) => {
+import { useContext } from "react";
+// import { ToggleSwitchProps } from "../../../types";
+import { temperatureContext } from "../MainBody";
+import "../styles.css";
+// { fetched, changeData }: ToggleSwitchProps
+const ToggleSwtich = () => {
+  const { fetched, changeData } = useContext(temperatureContext);
   const degree = fetched != "celsius";
   return (
     <div className="row">
