@@ -1,6 +1,6 @@
-export type SearchBoxTypes = {
-    query : string;
-    setQuery: (query: string) => void;
+export type SearchBoxTypes = {      // made optional for redux usage
+    query? : string;            
+    setQuery?: (query: string) => void;
     findWeather: () => void;
 }
 export type RequiredData = {

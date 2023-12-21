@@ -9,18 +9,27 @@ import ToggleData from "./ToggleData/ToggleData";
 import ForecastCard from "./ForecastCard";
 import Filter from "./Filter";
 
+import { useAppSelector } from "../../store/typedHooks";
+
+
 export const temperatureContext = createContext<ToggleSwitchProps>({});
 const MainBody = () => {
   console.log("main body");
-  const [fetched, setFetched] = useState("celsius");
+  //-------------------------- using redux ---------------------------
+  const days = useAppSelector((state) => state.forecast.days);
+  const query = useAppSelector((state) => state.searching.value);
+
   // let today = new Date();
   // let date = today.getDate() + '-'+(today.getMonth()+1)+'-'+ today.getFullYear()
   // var time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
   // console.log(date);
-  const [query, setQuery] = useState("");
+
+  //-------------------------------- using normal state --------------------------------
+  const [fetched, setFetched] = useState("celsius");
   const [data, setData] = useState<RequiredData>();
   const [forecast, setForecast] = useState<RequiredData[]>();
-  const [value, setValue] = useState(6);
+  // const [query, setQuery] = useState("");
+  // const [value, setValue] = useState(6);
 
   // fetching data
   const findWeather = async () => {
@@ -79,10 +88,6 @@ const MainBody = () => {
     }
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(parseInt(event.target.value));
-    // console.log('changing value');
-  };
   return (
     <section className="container">
       <div className="row">
@@ -90,14 +95,12 @@ const MainBody = () => {
           <Clock />
         </div>
         <div className="col-2">
-          <Filter value={value} handleChange={handleChange}></Filter>
+          <Filter></Filter>
         </div>
       </div>
       <div className="row">
         <div className="col-10">
           <SearchBox
-            query={query}
-            setQuery={setQuery}
             findWeather={findWeather}
           ></SearchBox>
         </div>
@@ -114,10 +117,10 @@ const MainBody = () => {
         </div>
       </div>
 
-      {data ? <MainCard data={data}></MainCard> : ""}
+      {data ? <MainCard key = {query} data={data}></MainCard> : ""}
       <div className="d-flex flex-wrap justify-content-center">
         {forecast
-          ? forecast.slice(0, value).map((item: RequiredData) => {
+          ? forecast.slice(0, days).map((item: RequiredData) => {
               return <ForecastCard {...item} />;
             })
           : ""}

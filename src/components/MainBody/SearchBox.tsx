@@ -1,7 +1,10 @@
 import { FaSearch } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "../../store/typedHooks";
 import { SearchBoxTypes } from "../../types";
-import ToggleSwitch  from './ToggleData/ToggleSwitch';
-const SearchBox = ({ query, setQuery, findWeather }: SearchBoxTypes) => {
+import { updateSearch } from "../../store/slices/searchingTerm";
+const SearchBox = ({ findWeather }: SearchBoxTypes) => {
+  const dispatch = useAppDispatch();
+  const query = useAppSelector((state) => state.searching.value);
   return (
     <div className="row">
       <div className="col-10">
@@ -10,7 +13,7 @@ const SearchBox = ({ query, setQuery, findWeather }: SearchBoxTypes) => {
           className="form-control"
           placeholder="Enter city name..."
           value={query}
-          onChange={(e) => setQuery(e.target.value.toUpperCase())}
+          onChange={(e) => dispatch(updateSearch(e.target.value.toUpperCase()))}
         />
       </div>
       <div className="col-2 mx-auto pb-2">
