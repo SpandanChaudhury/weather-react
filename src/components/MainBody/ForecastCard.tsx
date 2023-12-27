@@ -43,4 +43,4 @@ const ForecastCard = (data: RequiredData) => {
   );
 };
 
-export default ForecastCard;
+export default React.memo(ForecastCard);

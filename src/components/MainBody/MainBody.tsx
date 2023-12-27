@@ -8,6 +8,7 @@ import Clock from "./Clock";
 import ToggleData from "./ToggleData/ToggleData";
 import ForecastCard from "./ForecastCard";
 import Filter from "./Filter";
+import ChartBody from "./ChartBody/ChartBody";
 
 import { useAppSelector } from "../../store/typedHooks";
 
@@ -36,7 +37,7 @@ const MainBody = () => {
     // console.log('findweather');
     const apiKey = process.env.REACT_APP_apiKey;
 
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${query}&key=${apiKey}`;
+    const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${query}&key=${apiKey}&days=12`;
 
     await axios
       .get(url)
@@ -55,6 +56,7 @@ const MainBody = () => {
             icon: response.data.data[i].weather.icon,
             precipitation: response.data.data[i].pop,
             wind_speed: response.data.data[i].wind_spd,
+            humidity: response.data.data[i].rh
           };
           if (i == 0)
             setData({
@@ -125,6 +127,7 @@ const MainBody = () => {
             })
           : ""}
       </div>
+      { forecast && (<ChartBody data = {forecast}/>)}
     </section>
   );
 };
