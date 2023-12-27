@@ -56,9 +56,9 @@ const ChartBody = ({ data }: { data: RequiredData[] }) => {
           {
             label: "Relative Humidity",
             data: humidity,
-            backgroundColor: ["cyan"],
+            backgroundColor: ["#d9c0a0"],
             borderColor: "black",
-            borderWidth: 1,
+            borderWidth: 1
           },
         ],
       };
@@ -76,12 +76,24 @@ const ChartBody = ({ data }: { data: RequiredData[] }) => {
     <div className="row m-4">
       <div className="col-md-6">
         {Object.keys(tempData).length > 0 && (
-          <LineChart chartData={tempData} header = "Max-Min Temp" title = "Max-Min Temp through the time period" xLabel="DATE" yLabel="TEMPERATURE"></LineChart>
+          <LineChart
+            chartData={tempData}
+            header="Max-Min Temp"
+            title="Max-Min Temp through the time period"
+            xLabel="DATE"
+            yLabel="TEMPERATURE"
+          ></LineChart>
         )}
       </div>
       <div className="col-md-6">
         {Object.keys(humidityData).length > 0 && (
-          <LineChart chartData={humidityData} header = "Relative Humidity" title = "Relative Humidity" xLabel="DATE" yLabel="RELATIVE HUMIDITY(%)"></LineChart>
+          <LineChart
+            chartData={humidityData}
+            header="Relative Humidity"
+            title="Relative Humidity"
+            xLabel="DATE"
+            yLabel="RELATIVE HUMIDITY(%)"
+          ></LineChart>
         )}
       </div>
     </div>

@@ -31,7 +31,13 @@ function LineChart({
               },
             },
             legend: {
-              display: false,
+              display: true,
+              labels: {
+                color: 'black',
+                font: {
+                    size: 15
+                }
+              }
             },
             
           },
@@ -40,7 +46,7 @@ function LineChart({
               title: {
                 text: `${xLabel}`,
                 display: true,
-                color: "black",
+                color: "#1b2101",
                 font: {
                   size: 17,
                   weight: "bold",
@@ -64,7 +70,7 @@ function LineChart({
               title: {
                 text: `${yLabel}`,
                 display: true,
-                color: 'black',
+                color: '#1b2101',
                 font: {
                   size: 17,
                   weight: "bold",
