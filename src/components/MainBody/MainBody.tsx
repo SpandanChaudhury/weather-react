@@ -17,7 +17,9 @@ export const temperatureContext = createContext<ToggleSwitchProps>({});
 const MainBody = () => {
   console.log("main body");
   //-------------------------- using redux ---------------------------
-  const days = useAppSelector((state) => state.forecast.days);
+  let days = useAppSelector((state) => state.forecast.days);
+  // if(typeof days !== 'number')
+  //   days = Number(days);
   const query = useAppSelector((state) => state.searching.value);
 
   // let today = new Date();
@@ -35,41 +37,84 @@ const MainBody = () => {
   // fetching data
   const findWeather = async () => {
     // console.log('findweather');
-    const apiKey = process.env.REACT_APP_apiKey;
+    // if('caches' in window)
+    // {
+    //   console.log('present');
+    //   const cache = await caches.open('searchHistory');
+    //   const cacheValue = await cache.match('query');
+    //   if(cacheValue)
+    //   {
+    //     console.log(cacheValue);
+    //     const value = await cacheValue.text();
+    //     console.log(value);
+    //     await cache.put('query', new Response(query));
 
-    const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${query}&key=${apiKey}&days=12`;
-
-    await axios
-      .get(url)
-      .then((response) => {
-        console.log(response.data);
-        // setQuery(response.data.city_name);
-        setFetched("celsius");
-        let selectedData = [];
-        for (let i = 0; i < response.data.data.length; i++) {
-          let cdata = {
-            curr_temp: response.data.data[i].temp,
-            max_temp: response.data.data[i].max_temp,
-            min_temp: response.data.data[i].min_temp,
-            valid_date: response.data.data[i].valid_date,
-            weather: response.data.data[i].weather.description,
-            icon: response.data.data[i].weather.icon,
-            precipitation: response.data.data[i].pop,
-            wind_speed: response.data.data[i].wind_spd,
-            humidity: response.data.data[i].rh
-          };
-          if (i == 0)
-            setData({
-              ...cdata,
-              location: query,
-              country: response.data.country_code,
-            });
-          else selectedData.push(cdata);
+    //   }
+    //   else
+    //   {
+    //     await cache.put('query', new Response(query));
+    //   }
+    // }
+    if(query.length != 0)
+    {
+      if(localStorage.getItem('searchHistory'))
+      {
+        let history = JSON.parse(localStorage.getItem('searchHistory') || '');
+        
+        if(history.length < 3)
+        {
+          history.unshift(query);
         }
-
-        setForecast(selectedData);
-      })
-      .catch((err) => console.log(err));
+        else
+        {
+          history.pop();
+          history.unshift(query);
+        }
+        localStorage.setItem('searchHistory', JSON.stringify(history));
+      }
+      else
+      {
+        let history : string[] = [];
+        history.push(query);
+        localStorage.setItem('searchHistory', JSON.stringify(history));
+      }
+      const apiKey = process.env.REACT_APP_apiKey;
+  
+      const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${query}&key=${apiKey}&days=12`;
+  
+      await axios
+        .get(url)
+        .then((response) => {
+          console.log(response.data);
+          // setQuery(response.data.city_name);
+          setFetched("celsius");
+          let selectedData = [];
+          for (let i = 0; i < response.data.data.length; i++) {
+            let cdata = {
+              curr_temp: response.data.data[i].temp,
+              max_temp: response.data.data[i].max_temp,
+              min_temp: response.data.data[i].min_temp,
+              valid_date: response.data.data[i].valid_date,
+              weather: response.data.data[i].weather.description,
+              icon: response.data.data[i].weather.icon,
+              precipitation: response.data.data[i].pop,
+              wind_speed: response.data.data[i].wind_spd,
+              humidity: response.data.data[i].rh
+            };
+            if (i == 0)
+              setData({
+                ...cdata,
+                location: query,
+                country: response.data.country_code,
+              });
+            else selectedData.push(cdata);
+          }
+  
+          setForecast(selectedData);
+        })
+        .catch((err) => console.log(err));
+    }
+    
   };
 
   // changing the degree
@@ -97,23 +142,23 @@ const MainBody = () => {
           <Clock />
         </div>
         <div className="col-2">
-          <Filter></Filter>
         </div>
       </div>
       <div className="row">
-        <div className="col-10">
+        <div className="col-12">
           <SearchBox
             findWeather={findWeather}
           ></SearchBox>
         </div>
 
-        <div className="col-2">
-          {/* {data ? (
-            <ToggleSwitch fetched={fetched} changeData={changeData} />
-          ) : (
-            ""
-          )} */}
-          <temperatureContext.Provider value={{ fetched, changeData }}>
+      </div>
+      <div className="row p-2">
+        <div className="col-md-6 col-sm-6 col-xs-6">
+        <Filter></Filter>
+
+        </div>
+        <div className="col-md-5 col-sm-6 col-xs-6">
+        <temperatureContext.Provider value={{ fetched, changeData }}>
             <ToggleData></ToggleData>
           </temperatureContext.Provider>
         </div>

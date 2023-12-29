@@ -10,10 +10,14 @@ Chart.register(CategoryScale);
 const ChartBody = ({ data }: { data: RequiredData[] }) => {
   //   console.log(data);
   //   console.log(typeof data);
-  const days = useAppSelector((state) => state.forecast.days);
+    let days = useAppSelector((state) => state.forecast.days);
+    // if(typeof days !== 'number')
+    //     days = Number(days);
+    // let days = 5;
   let temperatureData, humidData, labels;
   const [tempData, setTempData] = useState({});
   const [humidityData, setHumidityData] = useState({});
+  
   console.log(days);
 
   // const [maxState, setMaxState] =
@@ -58,7 +62,7 @@ const ChartBody = ({ data }: { data: RequiredData[] }) => {
             data: humidity,
             backgroundColor: ["#d9c0a0"],
             borderColor: "black",
-            borderWidth: 1
+            borderWidth: 1,
           },
         ],
       };
@@ -74,7 +78,7 @@ const ChartBody = ({ data }: { data: RequiredData[] }) => {
 
   return (
     <div className="row m-4">
-      <div className="col-md-6">
+      <div className="col-md-12 col-lg-6">
         {Object.keys(tempData).length > 0 && (
           <LineChart
             chartData={tempData}
@@ -85,7 +89,7 @@ const ChartBody = ({ data }: { data: RequiredData[] }) => {
           ></LineChart>
         )}
       </div>
-      <div className="col-md-6">
+      <div className="col-md-12 col-lg-6">
         {Object.keys(humidityData).length > 0 && (
           <LineChart
             chartData={humidityData}
