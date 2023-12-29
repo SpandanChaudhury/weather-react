@@ -9,6 +9,7 @@ import ToggleData from "./ToggleData/ToggleData";
 import ForecastCard from "./ForecastCard";
 import Filter from "./Filter";
 import ChartBody from "./ChartBody/ChartBody";
+import handleSearchHistory from "../../utils/searchHistory";
 
 import { useAppSelector } from "../../store/typedHooks";
 
@@ -57,27 +58,7 @@ const MainBody = () => {
     // }
     if(query.length != 0)
     {
-      if(localStorage.getItem('searchHistory'))
-      {
-        let history = JSON.parse(localStorage.getItem('searchHistory') || '');
-        
-        if(history.length < 3)
-        {
-          history.unshift(query);
-        }
-        else
-        {
-          history.pop();
-          history.unshift(query);
-        }
-        localStorage.setItem('searchHistory', JSON.stringify(history));
-      }
-      else
-      {
-        let history : string[] = [];
-        history.push(query);
-        localStorage.setItem('searchHistory', JSON.stringify(history));
-      }
+      handleSearchHistory(query);
       const apiKey = process.env.REACT_APP_apiKey;
   
       const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${query}&key=${apiKey}&days=12`;

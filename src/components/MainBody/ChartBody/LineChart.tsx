@@ -15,12 +15,11 @@ function LineChart({
 }) {
   console.log(chartData);
   return (
-    <div className="chart-container">
+    <div className="chart-container" style={{ width: '100%', height: '300px' }}
+    >
       <h2 className="text-center text-warning"> {header} </h2>
       <Line
         data={chartData}
-        style={{ minHeight: '50px', minWidth: '50px'}}
-
         options={{
           plugins: {
             title: {
@@ -81,6 +80,7 @@ function LineChart({
             },
           },
           responsive: true,
+          maintainAspectRatio:false
         }}
       />
     </div>
